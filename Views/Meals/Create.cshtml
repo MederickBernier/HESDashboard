@@ -1,0 +1,84 @@
+﻿@model HESDashboard.Models.Meal
+@{
+    ViewData["Title"] = "Add Meal";
+}
+
+<h2 class="mb-4 text-accent">➕ Add Meal</h2>
+
+<form asp-action="Create" method="post">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label asp-for="Date" class="form-label">Date</label>
+            <input asp-for="Date" class="form-control" type="date" />
+            <span asp-validation-for="Date" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="MealType" class="form-label">Meal</label>
+            <input asp-for="MealType" class="form-control" />
+            <span asp-validation-for="MealType" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Calories" class="form-label">Calories</label>
+            <input asp-for="Calories" class="form-control" />
+            <span asp-validation-for="Calories" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="ProteinGrams" class="form-label">Protein (g)</label>
+            <input asp-for="ProteinGrams" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="CarbsGrams" class="form-label">Carbs (g)</label>
+            <input asp-for="CarbsGrams" class="form-control" />
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="FatGrams" class="form-label">Fat (g)</label>
+            <input asp-for="FatGrams" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="SatietyBefore" class="form-label">Satiety Before</label>
+            <input asp-for="SatietyBefore" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="SatietyAfter" class="form-label">Satiety After</label>
+            <input asp-for="SatietyAfter" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Mood" class="form-label">Mood</label>
+            <input asp-for="Mood" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="PlanRef" class="form-label">Plan Ref</label>
+            <input asp-for="PlanRef" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <label asp-for="Substitutions" class="form-label">Substitutions</label>
+            <input asp-for="Substitutions" class="form-control" />
+        </div>
+
+        <div class="col-12">
+            <label asp-for="Notes" class="form-label">Notes</label>
+            <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-success">💾 Save Meal</button>
+        <a asp-action="Index" class="btn btn-secondary">↩️ Back</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

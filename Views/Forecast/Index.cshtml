@@ -1,0 +1,38 @@
+﻿@model HESDashboard.ViewModels.HealthOverviewViewModel
+
+@if (Model.Forecasts == null || !Model.Forecasts.Any())
+{
+    <div class="alert alert-warning shadow-sm">
+        No forecast data available. Make sure you have recent daily metrics logged.
+    </div>
+}
+else
+{
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover text-center align-middle mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">📈 Metric</th>
+                    <th scope="col">📍 Current</th>
+                    <th scope="col">➡️ +7 Days</th>
+                    <th scope="col">⏩ +14 Days</th>
+                    <th scope="col">⏭️ +30 Days</th>
+                    <th scope="col">🧠 Algorithm</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var forecast in Model.Forecasts)
+                {
+                    <tr>
+                        <td class="fw-semibold text-start">@forecast.MetricName</td>
+                        <td>@(forecast.CurrentValue?.ToString("0.##") ?? "-")</td>
+                        <td class="text-primary fw-semibold">@(forecast.Forecast7Days?.ToString("0.##") ?? "-")</td>
+                        <td class="text-success fw-semibold">@(forecast.Forecast14Days?.ToString("0.##") ?? "-")</td>
+                        <td class="text-warning fw-semibold">@(forecast.Forecast30Days?.ToString("0.##") ?? "-")</td>
+                        <td class="text-muted small">@forecast.AlgorithmUsed</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

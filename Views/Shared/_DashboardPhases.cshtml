@@ -1,0 +1,71 @@
+﻿@model HESDashboard.ViewModels.HealthOverviewViewModel
+
+<h4 class="mb-3 text-accent">🧭 Active Phase & Goals</h4>
+
+@if (Model.CurrentPhase != null)
+{
+    <div class="card shadow-sm border-start border-4 border-primary mb-4">
+        <div class="card-header bg-primary text-white fw-bold">
+            Current Phase: @Model.CurrentPhase.Name
+        </div>
+        <div class="card-body">
+            <p class="mb-3">@Model.CurrentPhase.Description</p>
+
+            @if (Model.CurrentPhaseUnmetGoals?.Any() == true)
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var goal in Model.CurrentPhaseUnmetGoals)
+                    {
+                        <li class="list-group-item">
+                            <i class="bi bi-circle text-secondary me-2"></i>@goal.Description
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <div class="text-success fw-semibold">
+                    <i class="bi bi-check-circle-fill me-1"></i> 🎉 All goals completed for this phase!
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<h4 class="mb-3 text-accent">📌 All Phases</h4>
+
+@foreach (var phase in Model.AllPhases)
+{
+    var isActive = phase.Id == Model.CurrentPhase?.Id;
+    var isCompleted = phase.IsCompleted;
+
+    var phaseBorder = isActive ? "border-primary" :
+                      isCompleted ? "border-success" : "border-secondary";
+
+    var headerClass = isActive ? "bg-primary text-white" :
+                       isCompleted ? "bg-success text-white" : "bg-light fw-semibold";
+
+    <div class="card shadow-sm border-start border-4 @phaseBorder mb-3">
+        <div class="card-header @headerClass">
+            Phase @phase.Order: @phase.Name
+        </div>
+        <div class="card-body">
+            <p class="text-muted">@phase.Description</p>
+            @if (phase.Goals?.Any() == true)
+            {
+                <ul class="list-group list-group-flush">
+                    @foreach (var goal in phase.Goals)
+                    {
+                        <li class="list-group-item">
+                            <i class="bi bi-dot me-2 text-muted"></i>@goal.Description
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted fst-italic">No goals defined for this phase.</p>
+            }
+        </div>
+    </div>
+}

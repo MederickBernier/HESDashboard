@@ -1,0 +1,51 @@
+﻿@model HESDashboard.ViewModels.HealthOverviewViewModel
+
+@{
+    ViewData["Title"] = "Dashboard Overview";
+}
+
+<h2 class="mb-4 text-accent">🧠 Health Engineering Dashboard</h2>
+
+<!-- Tab Navigation -->
+<ul class="nav nav-tabs mb-4" id="dashboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview"
+                type="button" role="tab" aria-controls="overview" aria-selected="true">
+            📊 Overview
+        </button>
+    </li>
+@*     <li class="nav-item" role="presentation">
+        <button class="nav-link" id="trends-tab" data-bs-toggle="tab" data-bs-target="#trends"
+                type="button" role="tab" aria-controls="trends" aria-selected="false">
+            📈 Trends
+        </button>
+    </li> *@
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="log-tab" data-bs-toggle="tab" data-bs-target="#log"
+                type="button" role="tab" aria-controls="log" aria-selected="false">
+            🍽️💪 Meals & Training
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="phases-tab" data-bs-toggle="tab" data-bs-target="#phases"
+                type="button" role="tab" aria-controls="phases" aria-selected="false">
+            🧭 Phases
+        </button>
+    </li>
+</ul>
+
+<!-- Tab Content -->
+<div class="tab-content" id="dashboardTabContent">
+    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+        @await Html.PartialAsync("_DashboardOverview", Model)
+    </div>
+@*     <div class="tab-pane fade" id="trends" role="tabpanel" aria-labelledby="trends-tab">
+        @await Html.PartialAsync("_DashboardTrends", Model)
+    </div> *@
+    <div class="tab-pane fade" id="log" role="tabpanel" aria-labelledby="log-tab">
+        @await Html.PartialAsync("_DashboardLog", Model)
+    </div>
+    <div class="tab-pane fade" id="phases" role="tabpanel" aria-labelledby="phases-tab">
+        @await Html.PartialAsync("_DashboardPhases", Model)
+    </div>
+</div>

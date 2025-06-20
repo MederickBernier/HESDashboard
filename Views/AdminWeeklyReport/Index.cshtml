@@ -1,0 +1,47 @@
+﻿@model List<WeeklyReportDTO>
+
+@{
+    ViewData["Title"] = "Weekly Report";
+}
+
+<h2 class="mb-4 text-accent">📅 Weekly Progress Report</h2>
+
+<div class="table-responsive shadow-sm">
+    <table class="table table-bordered table-striped align-middle text-center">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">🗓️ Week</th>
+                <th scope="col">Start</th>
+                <th scope="col">End</th>
+                <th scope="col">⚖️ Avg Weight</th>
+                <th scope="col">📉 Δ Weight</th>
+                <th scope="col">❤️ Avg HR</th>
+                <th scope="col">💧 Body Fat %</th>
+                <th scope="col">💪 Muscle Mass</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Model)
+            {
+                var deltaStyle = report.WeightDelta switch
+                {
+                    > 0 => "text-danger fw-semibold",   // Gained weight
+                    < 0 => "text-success fw-semibold",  // Lost weight
+                    0 => "text-muted",
+                    _ => ""
+                };
+
+                <tr>
+                    <td>@report.WeekNumber</td>
+                    <td>@report.StartDate.ToString("yyyy-MM-dd")</td>
+                    <td>@report.EndDate.ToString("yyyy-MM-dd")</td>
+                    <td>@(report.AvgWeight?.ToString("F1") ?? "-")</td>
+                    <td class="@deltaStyle">@(report.WeightDelta?.ToString("F1") ?? "-")</td>
+                    <td>@(report.AvgHeartRate?.ToString("F0") ?? "-")</td>
+                    <td>@(report.AvgBodyFatPercent?.ToString("F1") ?? "-")</td>
+                    <td>@(report.AvgMuscleMassLbs?.ToString("F1") ?? "-")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

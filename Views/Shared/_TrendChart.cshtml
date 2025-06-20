@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DailyMetric>
+@using HESDashboard.Models
+
+@{
+    string chartId = $"chart_{ViewData["ChartTitle"]?.ToString()?.Replace(" ", "")}";
+    var selector = (Func<DailyMetric, double?>)ViewData["Selector"];
+    string unit = ViewData["Unit"]?.ToString() ?? "";
+    var chartTitle = ViewData["ChartTitle"]?.ToString() ?? "Metric";
+    var values = Model
+        .Where(m => selector(m).HasValue)
+        .Select(m => new { Date = ((DateOnly)m.Date).ToString("MM/dd"), Value = selector(m).Value })
+        .ToList();
+}
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title text-accent">@chartTitle Trend</h5>
+        <canvas id="@chartId" height="80"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const ctx_@chartId = document.getElementById('@chartId').getContext('2d');
+        new Chart(ctx_@chartId, {
+            type: 'line',
+            data: {
+                labels: [@string.Join(", ", values.Select(v => $"\"{v.Date}\""))],
+                datasets: [{
+                    label: '@chartTitle (@unit)',
+                    data: [@string.Join(", ", values.Select(v => v.Value.ToString("0.##")))],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    </script>
+}

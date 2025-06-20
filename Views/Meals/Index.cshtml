@@ -1,0 +1,53 @@
+﻿@model List<HESDashboard.Models.Meal>
+@{
+    ViewData["Title"] = "Meals Log";
+}
+
+<h2 class="mb-4 text-accent">🍽️ Meals Log</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a asp-action="Create" class="btn btn-primary">➕ Add Meal</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No meals recorded yet.</div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>Date</th>
+                    <th>Meal</th>
+                    <th>Calories</th>
+                    <th>Satiety (Before → After)</th>
+                    <th>Mood</th>
+                    <th>Plan Ref</th>
+                    <th class="text-center" style="width: 130px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var meal in Model)
+                {
+                    <tr>
+                        <td>@meal.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@meal.MealType</td>
+                        <td>@meal.Calories</td>
+                        <td>
+                            @(meal.SatietyBefore?.ToString() ?? "-") →
+                            @(meal.SatietyAfter?.ToString() ?? "-")
+                        </td>
+                        <td>@meal.Mood</td>
+                        <td>@meal.PlanRef</td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@meal.Id" class="btn btn-sm btn-outline-primary me-1">✏️</a>
+                            <a asp-action="Delete" asp-route-id="@meal.Id" class="btn btn-sm btn-outline-danger">🗑️</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

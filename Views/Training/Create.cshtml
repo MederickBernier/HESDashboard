@@ -1,0 +1,88 @@
+﻿@model HESDashboard.Models.Training
+
+@{
+    ViewData["Title"] = "Add Training Session";
+}
+
+<h2 class="text-accent mb-4">🏋️ Add Training Session</h2>
+
+<form asp-action="Create" method="post" class="row g-3 shadow p-4 rounded bg-light">
+    <div class="col-md-4">
+        <label asp-for="Date" class="form-label">Date</label>
+        <input asp-for="Date" class="form-control" type="date" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="TrainingType" class="form-label">Training Type</label>
+        <select asp-for="TrainingType" class="form-select">
+            <option value="Walking">🚶 Walking</option>
+            <option value="Running">🏃 Running</option>
+            <option value="Cycling">🚴 Cycling</option>
+            <option value="Strength">🏋️ Strength</option>
+            <option value="HIIT">🔥 HIIT</option>
+            <option value="Other">✨ Other</option>
+        </select>
+        <span asp-validation-for="TrainingType" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="Timeframe" class="form-label">Time of Day</label>
+        <select asp-for="Timeframe" class="form-select">
+            <option value="Morning">Morning</option>
+            <option value="Afternoon">Afternoon</option>
+            <option value="Evening">Evening</option>
+            <option value="Night">Night</option>
+        </select>
+        <span asp-validation-for="Timeframe" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label class="form-label">Duration (hh:mm:ss)</label>
+        <input name="Duration" class="form-control" type="text" placeholder="hh:mm:ss" />
+        <span asp-validation-for="Duration" class="text-danger"></span>
+        <span asp-validation-for="DurationSeconds" class="text-danger"></span>
+    </div>
+
+    @* Metrics (Grouped by 3s for layout clarity) *@
+    <div class="col-md-3"><label asp-for="DistanceKm" class="form-label">Distance (km)</label><input asp-for="DistanceKm" class="form-control" /><span asp-validation-for="DistanceKm" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="Calories" class="form-label">Calories</label><input asp-for="Calories" class="form-control" /><span asp-validation-for="Calories" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="Steps" class="form-label">Steps</label><input asp-for="Steps" class="form-control" /><span asp-validation-for="Steps" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="AvgSpeedKmh" class="form-label">Avg Speed (km/h)</label><input asp-for="AvgSpeedKmh" class="form-control" /><span asp-validation-for="AvgSpeedKmh" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="MaxSpeedKmh" class="form-label">Max Speed (km/h)</label><input asp-for="MaxSpeedKmh" class="form-control" /><span asp-validation-for="MaxSpeedKmh" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="AvgPace" class="form-label">Avg Pace (min/km)</label><input asp-for="AvgPace" class="form-control" /><span asp-validation-for="AvgPace" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="MaxPace" class="form-label">Max Pace (min/km)</label><input asp-for="MaxPace" class="form-control" /><span asp-validation-for="MaxPace" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="ElevationMinM" class="form-label">Elevation Min (m)</label><input asp-for="ElevationMinM" class="form-control" /><span asp-validation-for="ElevationMinM" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="ElevationMaxM" class="form-label">Elevation Max (m)</label><input asp-for="ElevationMaxM" class="form-control" /><span asp-validation-for="ElevationMaxM" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="TotalAscentKm" class="form-label">Ascent (km)</label><input asp-for="TotalAscentKm" class="form-control" /><span asp-validation-for="TotalAscentKm" class="text-danger"></span></div>
+
+    @* Heart, cadence, temp, water *@
+    <div class="col-md-3"><label asp-for="HeartRateAvg" class="form-label">Avg HR</label><input asp-for="HeartRateAvg" class="form-control" /><span asp-validation-for="HeartRateAvg" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="HeartRateMax" class="form-label">Max HR</label><input asp-for="HeartRateMax" class="form-control" /><span asp-validation-for="HeartRateMax" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="CadenceAvg" class="form-label">Avg Cadence</label><input asp-for="CadenceAvg" class="form-control" /><span asp-validation-for="CadenceAvg" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="CadenceMax" class="form-label">Max Cadence</label><input asp-for="CadenceMax" class="form-control" /><span asp-validation-for="CadenceMax" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="TemperatureC" class="form-label">Temperature (°C)</label><input asp-for="TemperatureC" class="form-control" /><span asp-validation-for="TemperatureC" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="Weather" class="form-label">Weather</label><input asp-for="Weather" class="form-control" /><span asp-validation-for="Weather" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="WaterMl" class="form-label">Water Drank (ml)</label><input asp-for="WaterMl" class="form-control" /><span asp-validation-for="WaterMl" class="text-danger"></span></div>
+
+    @* Subjective Scores *@
+    <div class="col-md-3"><label asp-for="PainScore" class="form-label">Pain (0-10)</label><input asp-for="PainScore" class="form-control" /><span asp-validation-for="PainScore" class="text-danger"></span></div>
+    <div class="col-md-3"><label asp-for="MoodAfter" class="form-label">Mood (1-10)</label><input asp-for="MoodAfter" class="form-control" /><span asp-validation-for="MoodAfter" class="text-danger"></span></div>
+
+    <div class="col-md-12">
+        <label asp-for="Notes" class="form-label">Notes</label>
+        <textarea asp-for="Notes" class="form-control" rows="3" placeholder="Add comments, injuries, weather notes, etc."></textarea>
+        <span asp-validation-for="Notes" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 mt-3">
+        <button type="submit" class="btn btn-success">✅ Save</button>
+        <a asp-action="Index" class="btn btn-outline-secondary ms-2">Back to List</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

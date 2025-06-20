@@ -1,0 +1,42 @@
+﻿@model HESDashboard.Models.Training
+@{
+    ViewData["Title"] = "Training Details";
+}
+
+<h2 class="mb-4 text-accent">📄 Training Details</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped shadow-sm">
+        <tbody>
+            <tr><th>Training Type</th><td>@Model.TrainingType</td></tr>
+            <tr><th>Date</th><td>@Model.Date</td></tr>
+            <tr><th>Timeframe</th><td>@Model.Timeframe</td></tr>
+            <tr><th>Duration</th><td>@Model.Duration.ToString(@"hh\:mm\:ss")</td></tr>
+            <tr><th>Distance (km)</th><td>@Model.DistanceKm?.ToString("F2")</td></tr>
+            <tr><th>Calories</th><td>@Model.Calories</td></tr>
+            <tr><th>Steps</th><td>@Model.Steps</td></tr>
+            <tr><th>Avg Speed (km/h)</th><td>@Model.AvgSpeedKmh?.ToString("F1")</td></tr>
+            <tr><th>Max Speed (km/h)</th><td>@Model.MaxSpeedKmh?.ToString("F1")</td></tr>
+            <tr><th>Avg Pace</th><td>@Model.AvgPace</td></tr>
+            <tr><th>Max Pace</th><td>@Model.MaxPace</td></tr>
+            <tr><th>Elevation Min (m)</th><td>@Model.ElevationMinM</td></tr>
+            <tr><th>Elevation Max (m)</th><td>@Model.ElevationMaxM</td></tr>
+            <tr><th>Total Ascent (km)</th><td>@Model.TotalAscentKm?.ToString("F2")</td></tr>
+            <tr><th>Avg Heart Rate (bpm)</th><td>@Model.HeartRateAvg</td></tr>
+            <tr><th>Max Heart Rate (bpm)</th><td>@Model.HeartRateMax</td></tr>
+            <tr><th>Avg Cadence</th><td>@Model.CadenceAvg</td></tr>
+            <tr><th>Max Cadence</th><td>@Model.CadenceMax</td></tr>
+            <tr><th>Temperature (°C)</th><td>@Model.TemperatureC</td></tr>
+            <tr><th>Weather</th><td>@Model.Weather</td></tr>
+            <tr><th>Water Drank (ml)</th><td>@Model.WaterMl</td></tr>
+            <tr><th>Pain Score</th><td>@Model.PainScore</td></tr>
+            <tr><th>Mood After</th><td>@Model.MoodAfter</td></tr>
+            <tr><th>Notes</th><td>@Model.Notes</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="mt-4 d-flex gap-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">✏️ Edit</a>
+    <a asp-action="Index" class="btn btn-secondary">⬅️ Back</a>
+</div>

@@ -1,0 +1,99 @@
+﻿@model IEnumerable<HESDashboard.Models.DailyMetric>
+@{
+    ViewData["Title"] = "Daily Metrics";
+    var currentPage = ViewBag.CurrentPage ?? 1;
+    var totalPages = ViewBag.TotalPages ?? 1;
+}
+
+<h2 class="mb-4 text-accent">📅 Daily Health Metrics</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a class="btn btn-accent" asp-action="Create">➕ Add Entry</a>
+    <a class="btn btn-outline-secondary" href="/health/json" target="_blank">📄 View All as JSON</a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Weight (lbs)</th>
+                <th>BMI</th>
+                <th>Heart Rate</th>
+                <th>Body Fat %</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var rowId = $"expand-{item.Id}";
+                var jsonId = $"json-{item.Id}";
+                <tr>
+                    <td>@item.Date?.ToString("yyyy-MM-dd")</td>
+                    <td>@item.WeightLbs?.ToString("F1")</td>
+                    <td>@item.BMI?.ToString("F1")</td>
+                    <td>@item.HeartRate</td>
+                    <td>@item.BodyFatPercent?.ToString("F1")</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#@rowId">
+                                🔽 Expand
+                            </button>
+                            <a class="btn btn-sm btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">✏️ Edit</a>
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">🗑️ Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="collapse" id="@rowId">
+                    <td colspan="6" class="bg-light-subtle">
+                        <div class="row g-3 p-3">
+                            <div class="col-md-3"><strong>Body Fat Mass:</strong> @item.BodyFatMassLbs?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Lean Body Mass:</strong> @item.LeanBodyMassLbs?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Muscle Mass:</strong> @item.MuscleMassLbs?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Skeletal Muscle:</strong> @item.SkeletalMuscleMassLbs?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Bone Mass:</strong> @item.BoneMassLbs?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Water %:</strong> @item.WaterPercent?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Protein %:</strong> @item.ProteinPercent?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>BMR (Kcal):</strong> @item.BMRKcal</div>
+                            <div class="col-md-3"><strong>Visceral Fat:</strong> @item.VisceralFat</div>
+                            <div class="col-md-3"><strong>Subcutaneous Fat %:</strong> @item.SubcutaneousFatPercent?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Body Age:</strong> @item.BodyAgeYears</div>
+                            <div class="col-md-3"><strong>Body Type:</strong> @item.BodyType</div>
+                            <div class="col-12 mt-3">
+                                <button class="btn btn-sm btn-outline-info" type="button" onclick="toggleJson('@jsonId')">🧾 View JSON</button>
+                                <pre id="@jsonId" class="mt-2 p-2 bg-dark text-white small rounded d-none">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }))</pre>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- Pagination -->
+@if (totalPages > 1)
+{
+    <nav>
+        <ul class="pagination justify-content-center mt-4">
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(i == currentPage ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
+
+@section Scripts {
+    <script>
+        function toggleJson(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.toggle("d-none");
+            }
+        }
+    </script>
+}

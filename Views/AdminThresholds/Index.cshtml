@@ -1,0 +1,48 @@
+﻿@model IEnumerable<HESDashboard.Models.HesThreshold>
+
+@{
+    ViewData["Title"] = "⚠️ Manage Thresholds";
+}
+
+<h2 class="mb-4 text-danger">⚠️ Threshold Rules</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a asp-action="Create" class="btn btn-outline-primary">
+        ➕ Add New Threshold
+    </a>
+</div>
+
+<div class="table-responsive shadow-sm">
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">🧮 Metric Key</th>
+                <th scope="col">⬇️ Min</th>
+                <th scope="col">⬆️ Max</th>
+                <th scope="col">📢 Alert Message</th>
+                <th scope="col" class="text-center" style="width: 15%">⚙️ Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var threshold in Model)
+            {
+                <tr>
+                    <td class="fw-semibold">@threshold.MetricKey</td>
+                    <td>@threshold.MinValue</td>
+                    <td>@threshold.MaxValue</td>
+                    <td>@threshold.AlertMessage</td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <a asp-action="Edit" asp-route-id="@threshold.Id" class="btn btn-sm btn-outline-warning">
+                                ✏️ Edit
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@threshold.Id" class="btn btn-sm btn-outline-danger">
+                                🗑️ Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

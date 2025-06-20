@@ -1,0 +1,111 @@
+﻿@model HESDashboard.ViewModels.HealthOverviewViewModel
+@{
+    var latest = Model.Latest;
+}
+
+<h4 class="mb-3 text-accent">📊 Health Snapshot</h4>
+
+@if (latest == null)
+{
+    <p>No data available. Start by adding a health entry.</p>
+}
+else
+{
+    <div class="row g-4">
+        <!-- Weight -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-start border-4 border-success bg-light-subtle">
+                <div class="card-body">
+                    <h6 class="card-title text-accent">Weight</h6>
+                    <p class="fs-3 fw-bold mb-2">@latest.WeightLbs?.ToString("F1") lbs</p>
+                    <div class="small">
+                        <span class="d-block">
+                            📅 Daily:
+                            <span class="@(Model.DeltaWeight < 0 ? "text-success" : "text-danger")">
+                                @(Model.DeltaWeight >= 0 ? "▲ +" : "▼ ")@Model.DeltaWeight.ToString("F1")
+                            </span>
+                        </span>
+                        <span class="d-block">
+                            🚀 Total:
+                            <span class="@(Model.TrendWeight < 0 ? "text-success" : "text-danger")">
+                                @(Model.TrendWeight >= 0 ? "▲ +" : "▼ ")@Model.TrendWeight.ToString("F1")
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BMI -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-start border-4 border-info bg-light-subtle">
+                <div class="card-body">
+                    <h6 class="card-title text-accent">BMI</h6>
+                    <p class="fs-3 fw-bold mb-2">@latest.BMI?.ToString("F1")</p>
+                    <div class="small">
+                        <span class="d-block">
+                            📅 Daily:
+                            <span class="@(Model.DeltaBMI < 0 ? "text-success" : "text-danger")">
+                                @(Model.DeltaBMI >= 0 ? "▲ +" : "▼ ")@Model.DeltaBMI.ToString("F1")
+                            </span>
+                        </span>
+                        <span class="d-block">
+                            🚀 Total:
+                            <span class="@(Model.TrendBMI < 0 ? "text-success" : "text-danger")">
+                                @(Model.TrendBMI >= 0 ? "▲ +" : "▼ ")@Model.TrendBMI.ToString("F1")
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Body Fat % -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-start border-4 border-warning bg-light-subtle">
+                <div class="card-body">
+                    <h6 class="card-title text-accent">Body Fat %</h6>
+                    <p class="fs-3 fw-bold mb-2">@latest.BodyFatPercent?.ToString("F1")%</p>
+                    <div class="small">
+                        <span class="d-block">
+                            📅 Daily:
+                            <span class="@(Model.DeltaBodyFat < 0 ? "text-success" : "text-danger")">
+                                @(Model.DeltaBodyFat >= 0 ? "▲ +" : "▼ ")@Model.DeltaBodyFat.ToString("F1")%
+                            </span>
+                        </span>
+                        <span class="d-block">
+                            🚀 Total:
+                            <span class="@(Model.TrendBodyFat < 0 ? "text-success" : "text-danger")">
+                                @(Model.TrendBodyFat >= 0 ? "▲ +" : "▼ ")@Model.TrendBodyFat.ToString("F1")%
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Heart Rate -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card shadow-sm border-start border-4 border-danger bg-light-subtle">
+                <div class="card-body">
+                    <h6 class="card-title text-accent">Heart Rate</h6>
+                    <p class="fs-3 fw-bold mb-2">@latest.HeartRate bpm</p>
+                    <div class="small">
+                        <span class="d-block">
+                            📅 Daily:
+                            <span class="@(Model.DeltaHeartRate < 0 ? "text-success" : "text-danger")">
+                                @(Model.DeltaHeartRate >= 0 ? "▲ +" : "▼ ")@Model.DeltaHeartRate bpm
+                            </span>
+                        </span>
+                        <span class="d-block">
+                            🚀 Total:
+                            <span class="@(Model.TrendHeartRate < 0 ? "text-success" : "text-danger")">
+                                @(Model.TrendHeartRate >= 0 ? "▲ +" : "▼ ")@Model.TrendHeartRate bpm
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

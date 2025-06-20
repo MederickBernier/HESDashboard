@@ -1,0 +1,154 @@
+﻿@model HESDashboard.Models.Training
+@{
+    ViewData["Title"] = "✏️ Edit Training";
+}
+
+<h2 class="mb-4 text-accent">✏️ Edit Training</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="row g-3">
+
+        <div class="col-md-4">
+            <label asp-for="Date" class="form-label">Date</label>
+            <input asp-for="Date" class="form-control" type="date" />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="TrainingType" class="form-label">Training Type</label>
+            <select asp-for="TrainingType" class="form-select">
+                <option value="Walking">🚶 Walking</option>
+                <option value="Running">🏃 Running</option>
+                <option value="Cycling">🚴 Cycling</option>
+                <option value="Strength">🏋️ Strength</option>
+                <option value="HIIT">🔥 HIIT</option>
+                <option value="Other">✨ Other</option>
+            </select>
+            <span asp-validation-for="TrainingType" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label asp-for="Timeframe" class="form-label">Time of Day</label>
+            <input asp-for="Timeframe" class="form-control" />
+            <span asp-validation-for="Timeframe" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Duration (hh:mm:ss)</label>
+            <input name="Duration" class="form-control" type="text" value="@Model.Duration.ToString(@"hh\:mm\:ss")" />
+            <span asp-validation-for="Duration" class="text-danger"></span>
+        </div>
+
+        @* Core Physical Stats *@
+        <div class="col-md-3">
+            <label asp-for="DistanceKm" class="form-label"></label>
+            <input asp-for="DistanceKm" class="form-control" />
+            <span asp-validation-for="DistanceKm" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="Calories" class="form-label"></label>
+            <input asp-for="Calories" class="form-control" />
+            <span asp-validation-for="Calories" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="Steps" class="form-label"></label>
+            <input asp-for="Steps" class="form-control" />
+            <span asp-validation-for="Steps" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="AvgSpeedKmh" class="form-label"></label>
+            <input asp-for="AvgSpeedKmh" class="form-control" />
+            <span asp-validation-for="AvgSpeedKmh" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="MaxSpeedKmh" class="form-label"></label>
+            <input asp-for="MaxSpeedKmh" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="AvgPace" class="form-label"></label>
+            <input asp-for="AvgPace" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="MaxPace" class="form-label"></label>
+            <input asp-for="MaxPace" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="ElevationMinM" class="form-label"></label>
+            <input asp-for="ElevationMinM" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="ElevationMaxM" class="form-label"></label>
+            <input asp-for="ElevationMaxM" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="TotalAscentKm" class="form-label"></label>
+            <input asp-for="TotalAscentKm" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="HeartRateAvg" class="form-label"></label>
+            <input asp-for="HeartRateAvg" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="HeartRateMax" class="form-label"></label>
+            <input asp-for="HeartRateMax" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="CadenceAvg" class="form-label"></label>
+            <input asp-for="CadenceAvg" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="CadenceMax" class="form-label"></label>
+            <input asp-for="CadenceMax" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="TemperatureC" class="form-label"></label>
+            <input asp-for="TemperatureC" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="Weather" class="form-label"></label>
+            <input asp-for="Weather" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="WaterMl" class="form-label"></label>
+            <input asp-for="WaterMl" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="PainScore" class="form-label"></label>
+            <input asp-for="PainScore" class="form-control" />
+        </div>
+
+        <div class="col-md-3">
+            <label asp-for="MoodAfter" class="form-label">Mood After</label>
+            <input asp-for="MoodAfter" class="form-control" />
+        </div>
+
+        <div class="col-md-12">
+            <label asp-for="Notes" class="form-label">Notes</label>
+            <textarea asp-for="Notes" class="form-control" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex gap-3">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

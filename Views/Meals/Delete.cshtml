@@ -1,0 +1,22 @@
+﻿@model HESDashboard.Models.Meal
+@{
+    ViewData["Title"] = "Delete Meal";
+}
+
+<h2 class="mb-4 text-danger">🗑️ Confirm Meal Deletion</h2>
+
+<div class="alert alert-warning shadow-sm">
+    <p class="mb-1">
+        Are you sure you want to delete the meal <strong>@Model.MealType</strong> logged on <strong>@Model.Date.ToString("yyyy-MM-dd")</strong>?
+    </p>
+    @if (!string.IsNullOrWhiteSpace(Model.Notes))
+    {
+        <p class="small text-muted">📝 Notes: @Model.Notes</p>
+    }
+</div>
+
+<form asp-action="DeleteConfirmed" method="post" class="mt-3">
+    @Html.HiddenFor(m => m.Id)
+    <button type="submit" class="btn btn-danger">🗑️ Yes, Delete</button>
+    <a asp-action="Index" class="btn btn-outline-secondary ms-2">↩️ Cancel</a>
+</form>

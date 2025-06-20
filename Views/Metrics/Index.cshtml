@@ -1,0 +1,108 @@
+﻿@model HESDashboard.ViewModels.MetricsFilterViewModel
+@{
+    ViewData["Title"] = "Metrics Log";
+}
+
+<h2 class="mb-4 text-accent">🗂️ All Recorded Metrics</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input id="startDate" type="date" name="startDate" class="form-control" value="@Model.StartDate?.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-3">
+        <label for="endDate" class="form-label">End Date</label>
+        <input id="endDate" type="date" name="endDate" class="form-control" value="@Model.EndDate?.ToString("yyyy-MM-dd")" />
+    </div>
+    <div class="col-md-3">
+        <label for="sortBy" class="form-label">Sort By</label>
+        <select id="sortBy" name="sortBy" class="form-select">
+            <option value="">Date (default)</option>
+            <option value="weight" selected="@(Model.SortBy == "weight")">Weight</option>
+            <option value="bmi" selected="@(Model.SortBy == "bmi")">BMI</option>
+            <option value="bodyfat" selected="@(Model.SortBy == "bodyfat")">Body Fat %</option>
+            <option value="heartrate" selected="@(Model.SortBy == "heartrate")">Heart Rate</option>
+        </select>
+    </div>
+    <div class="col-md-3 d-flex align-items-end gap-2">
+        <button type="submit" class="btn btn-primary w-100">🔍 Filter</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">↺ Reset</a>
+    </div>
+</form>
+
+<div class="mb-3 d-flex gap-2 flex-wrap align-items-center">
+    <a asp-action="ExportCsv"
+       asp-route-startDate="@Model.StartDate?.ToString("yyyy-MM-dd")"
+       asp-route-endDate="@Model.EndDate?.ToString("yyyy-MM-dd")"
+       class="btn btn-outline-success">
+        📤 Export CSV
+    </a>
+
+    <a asp-action="ExportJson"
+       asp-route-startDate="@Model.StartDate?.ToString("yyyy-MM-dd")"
+       asp-route-endDate="@Model.EndDate?.ToString("yyyy-MM-dd")"
+       class="btn btn-outline-info">
+        📤 Export JSON
+    </a>
+
+    <a asp-action="Create" class="btn btn-success ms-auto">➕ Add New Entry</a>
+</div>
+
+<table class="table table-striped table-bordered align-middle">
+    <thead class="table-light">
+        <tr>
+            <th scope="col">📅 Date</th>
+            <th scope="col">⚖️ Weight (lbs)</th>
+            <th scope="col">📊 BMI</th>
+            <th scope="col">💧 Body Fat (%)</th>
+            <th scope="col">❤️ Heart Rate</th>
+            <th scope="col" style="width:120px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Results?.Any() == true)
+        {
+            foreach (var item in Model.Results)
+            {
+                <tr>
+                    <td>@item.Date?.ToString("yyyy-MM-dd")</td>
+                    <td>@item.WeightLbs?.ToString("F1")</td>
+                    <td>@item.BMI?.ToString("F1")</td>
+                    <td>@item.BodyFatPercent?.ToString("F1")</td>
+                    <td>@item.HeartRate</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">✏️ Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger ms-1">🗑️ Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center text-muted">No metrics found for the selected filters.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (Model.TotalPages > 1)
+{
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination">
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <a class="page-link"
+                       asp-action="Index"
+                       asp-route-page="@i"
+                       asp-route-startDate="@Model.StartDate?.ToString("yyyy-MM-dd")"
+                       asp-route-endDate="@Model.EndDate?.ToString("yyyy-MM-dd")"
+                       asp-route-sortBy="@Model.SortBy">
+                        @i
+                    </a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

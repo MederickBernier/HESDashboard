@@ -1,0 +1,109 @@
+﻿@model HESDashboard.ViewModels.HealthOverviewViewModel
+
+<h4 class="mb-3 text-accent">🍽️ Meals Today</h4>
+
+@if (Model.TodaysMeals == null || !Model.TodaysMeals.Any())
+{
+    <div class="alert alert-light border">No meals logged for today.</div>
+}
+else
+{
+    <div class="card shadow-sm border-start border-4 border-warning mb-4">
+        <div class="card-header bg-light fw-semibold">
+            🍴 Total Calories: <strong>@Model.TotalCaloriesToday</strong> kcal
+        </div>
+        <ul class="list-group list-group-flush">
+            @foreach (var meal in Model.TodaysMeals)
+            {
+                <li class="list-group-item d-flex flex-column">
+                    <div class="d-flex justify-content-between">
+                        <span><i class="bi bi-egg-fried me-1"></i><strong>@meal.MealType</strong></span>
+                        <span class="text-muted">@meal.Calories kcal</span>
+                    </div>
+                    <div class="small text-muted mt-1">
+                        @if (!string.IsNullOrWhiteSpace(meal.Mood)) {
+                            <span class="me-3"><i class="bi bi-emoji-smile me-1"></i> Mood: @meal.Mood</span>
+                        }
+                        @if (meal.SatietyBefore.HasValue && meal.SatietyAfter.HasValue) {
+                            <span><i class="bi bi-arrow-left-right me-1"></i> Satiety: @meal.SatietyBefore → @meal.SatietyAfter</span>
+                        }
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+<h4 class="mb-3 text-accent">💪 Trainings Today</h4>
+
+@if (Model.TodaysTrainings == null || !Model.TodaysTrainings.Any())
+{
+    <div class="alert alert-light border">No training sessions logged for today.</div>
+}
+else
+{
+    var totalDuration = TimeSpan.FromSeconds(Model.TotalTrainingDurationToday ?? 0);
+    <div class="card shadow-sm border-start border-4 border-success mb-4">
+        <div class="card-header bg-light fw-semibold">
+            🏃‍♂️ Sessions: <strong>@Model.TodaysTrainings.Count</strong> |
+            ⏱️ Total Time: <strong>@totalDuration.ToString(@"hh\:mm\:ss")</strong>
+        </div>
+        <ul class="list-group list-group-flush">
+            @foreach (var training in Model.TodaysTrainings)
+            {
+                var sessionDuration = TimeSpan.FromSeconds(training.DurationSeconds);
+                <li class="list-group-item d-flex flex-column">
+                    <div class="d-flex justify-content-between">
+                        <span><i class="bi bi-person-running me-1"></i><strong>@training.TrainingType</strong></span>
+                        <span class="text-muted">@sessionDuration.ToString(@"hh\:mm\:ss")</span>
+                    </div>
+                    @if (training.DistanceKm.HasValue)
+                    {
+                        <div class="small text-muted mt-1">
+                            <i class="bi bi-signpost-2 me-1"></i> @training.DistanceKm.Value.ToString("F2") km
+                        </div>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+@section Scripts {
+    @if (Model.TodaysMeals?.Any() == true)
+    {
+        var lastMealTime = Model.TodaysMeals.LastOrDefault()?.TimeLogged.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ssZ");
+        <script>
+            const lastMeal = new Date("@lastMealTime");
+
+            function updateDrift() {
+                const now = new Date();
+                const diffMs = now - lastMeal;
+                const diffMin = Math.floor(diffMs / 60000);
+                const hours = Math.floor(diffMin / 60);
+                const minutes = diffMin % 60;
+
+                const driftText = `${hours.toString().padStart(2, '0')}h ${minutes.toString().padStart(2, '0')}m since last meal`;
+                const driftBox = document.getElementById("meal-drift-box");
+                const driftLabel = document.getElementById("meal-drift-text");
+
+                if (driftLabel) driftLabel.textContent = driftText;
+
+                if (driftBox) {
+                    driftBox.classList.remove("alert-secondary", "alert-warning", "alert-danger");
+
+                    if (diffMin < 180) {
+                        driftBox.classList.add("alert-secondary");
+                    } else if (diffMin < 300) {
+                        driftBox.classList.add("alert-warning");
+                    } else {
+                        driftBox.classList.add("alert-danger");
+                    }
+                }
+            }
+
+            updateDrift();
+            setInterval(updateDrift, 60000);
+        </script>
+    }
+}

@@ -1,0 +1,85 @@
+﻿@model HESDashboard.ViewModels.HealthOverviewViewModel
+@using HESDashboard.Models
+
+<h3 class="mb-4 text-accent">📈 Trends & 🔮 Forecasts</h3>
+
+@* --- Weight --- *@
+<div class="row g-4 mb-4">
+    <div class="col-md-8">
+        @await Html.PartialAsync("_TrendChart", Model.Metrics, new ViewDataDictionary(ViewData) {
+                { "ChartTitle", "Weight" },
+                { "Unit", "lbs" },
+                { "Selector", new Func<DailyMetric, double?>(m => m.WeightLbs) }
+                })
+    </div>
+    <div class="col-md-4">
+        @{
+            var weightForecast = Model.Forecasts?.FirstOrDefault(f => f.MetricName == "WeightLbs");
+        }
+        <div class="card border-secondary shadow-sm border-start border-4">
+            <div class="card-body">
+                <h5 class="card-title text-accent mb-2">🔮 Forecast: Weight</h5>
+                <ul class="list-unstyled mb-2">
+                    <li><strong>+7d:</strong> @(weightForecast?.Forecast7Days?.ToString("0.##") ?? "—") lbs</li>
+                    <li><strong>+14d:</strong> @(weightForecast?.Forecast14Days?.ToString("0.##") ?? "—") lbs</li>
+                    <li><strong>+30d:</strong> @(weightForecast?.Forecast30Days?.ToString("0.##") ?? "—") lbs</li>
+                </ul>
+                <div class="small fw-semibold text-muted">📊 Trend: @(weightForecast?.AlgorithmUsed ?? "—")</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* --- BMI --- *@
+<div class="row g-4 mb-4">
+    <div class="col-md-8">
+        @await Html.PartialAsync("_TrendChart", Model.Metrics, new ViewDataDictionary(ViewData) {
+                { "ChartTitle", "BMI" },
+                { "Unit", "" },
+                { "Selector", new Func<DailyMetric, double?>(m => m.BMI) }
+                })
+    </div>
+    <div class="col-md-4">
+        @{
+            var bmiForecast = Model.Forecasts?.FirstOrDefault(f => f.MetricName == "BMI");
+        }
+        <div class="card border-secondary shadow-sm border-start border-4">
+            <div class="card-body">
+                <h5 class="card-title text-accent mb-2">🔮 Forecast: BMI</h5>
+                <ul class="list-unstyled mb-2">
+                    <li><strong>+7d:</strong> @(bmiForecast?.Forecast7Days?.ToString("0.##") ?? "—")</li>
+                    <li><strong>+14d:</strong> @(bmiForecast?.Forecast14Days?.ToString("0.##") ?? "—")</li>
+                    <li><strong>+30d:</strong> @(bmiForecast?.Forecast30Days?.ToString("0.##") ?? "—")</li>
+                </ul>
+                <div class="small fw-semibold text-muted">📊 Trend: @(bmiForecast?.AlgorithmUsed ?? "—")</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* --- Body Fat % --- *@
+<div class="row g-4 mb-4">
+    <div class="col-md-8">
+        @await Html.PartialAsync("_TrendChart", Model.Metrics, new ViewDataDictionary(ViewData) {
+                { "ChartTitle", "Body Fat %" },
+                { "Unit", "%" },
+                { "Selector", new Func<DailyMetric, double?>(m => m.BodyFatPercent) }
+                })
+    </div>
+    <div class="col-md-4">
+        @{
+            var fatForecast = Model.Forecasts?.FirstOrDefault(f => f.MetricName == "BodyFatPercent");
+        }
+        <div class="card border-secondary shadow-sm border-start border-4">
+            <div class="card-body">
+                <h5 class="card-title text-accent mb-2">🔮 Forecast: Body Fat %</h5>
+                <ul class="list-unstyled mb-2">
+                    <li><strong>+7d:</strong> @(fatForecast?.Forecast7Days?.ToString("0.##") ?? "—")%</li>
+                    <li><strong>+14d:</strong> @(fatForecast?.Forecast14Days?.ToString("0.##") ?? "—")%</li>
+                    <li><strong>+30d:</strong> @(fatForecast?.Forecast30Days?.ToString("0.##") ?? "—")%</li>
+                </ul>
+                <div class="small fw-semibold text-muted">📊 Trend: @(fatForecast?.AlgorithmUsed ?? "—")</div>
+            </div>
+        </div>
+    </div>
+</div>

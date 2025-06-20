@@ -1,0 +1,89 @@
+﻿@model HESDashboard.Models.HesPhase
+
+@{
+    ViewData["Title"] = "Edit Phase";
+    var exitConditions = Model.ExitConditions?.ToList() ?? new List<HESDashboard.Models.HesPhaseExitCondition>();
+}
+
+<h2 class="mb-4 text-accent">✏️ Edit Phase</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Phase Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Order" class="form-label">Order</label>
+        <input asp-for="Order" type="number" class="form-control" />
+        <span asp-validation-for="Order" class="text-danger"></span>
+    </div>
+
+    <div class="form-check form-switch mb-4">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label">Active Phase</label>
+    </div>
+
+    <h4 class="mb-3">🚩 Exit Conditions</h4>
+    <div id="exit-conditions-container">
+        @for (int i = 0; i < exitConditions.Count; i++)
+        {
+            <div class="mb-3 border p-3 rounded shadow-sm bg-light">
+                <input type="hidden" name="ExitConditions[@i].Id" value="@exitConditions[i].Id" />
+                <input type="hidden" name="ExitConditions[@i].HesPhaseId" value="@Model.Id" />
+
+                <label class="form-label fw-semibold">Condition Description</label>
+                <input class="form-control mb-2" name="ExitConditions[@i].ConditionDescription" value="@exitConditions[i].ConditionDescription" required />
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="ExitConditions[@i].IsMet" value="true" @(exitConditions[i].IsMet ? "checked" : "") />
+                    <input type="hidden" name="ExitConditions[@i].IsMet" value="false" />
+                    <label class="form-check-label">✅ Mark as Met</label>
+                </div>
+            </div>
+        }
+    </div>
+
+    <button type="button" class="btn btn-outline-primary mb-4" onclick="addExitCondition()">+ Add Exit Condition</button>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">💾 Save Changes</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        let exitConditionIndex = @exitConditions.Count;
+
+        function addExitCondition() {
+            const container = document.getElementById("exit-conditions-container");
+            const div = document.createElement("div");
+            div.classList.add("mb-3", "border", "p-3", "rounded", "shadow-sm", "bg-light");
+
+            div.innerHTML = `
+                <input type="hidden" name="ExitConditions[${exitConditionIndex}].HesPhaseId" value="@Model.Id" />
+                <label class="form-label fw-semibold">Condition Description</label>
+                <input class="form-control mb-2" name="ExitConditions[${exitConditionIndex}].ConditionDescription" required />
+
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="ExitConditions[${exitConditionIndex}].IsMet" value="true" />
+                    <input type="hidden" name="ExitConditions[${exitConditionIndex}].IsMet" value="false" />
+                    <label class="form-check-label">✅ Mark as Met</label>
+                </div>
+            `;
+
+            container.appendChild(div);
+            exitConditionIndex++;
+        }
+    </script>
+}

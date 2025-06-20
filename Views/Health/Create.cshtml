@@ -1,0 +1,142 @@
+﻿@model HESDashboard.Models.DailyMetric
+@{
+    ViewData["Title"] = "Add Daily Metric";
+}
+
+<h2 class="mb-4 text-accent">📝 Add Daily Health Metric</h2>
+
+<div class="card shadow-sm mb-5">
+    <div class="card-body">
+        <form asp-action="Create" method="post" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <label asp-for="Date" class="form-label fw-semibold">Date</label>
+                    <input asp-for="Date" type="date" class="form-control" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <div class="col-12">
+                    <h5 class="mt-3 border-bottom pb-1">📏 Body Composition</h5>
+                </div>
+
+                @* Each field follows this structure *@
+                <div class="col-md-3">
+                    <label asp-for="WeightLbs" class="form-label">Weight (lbs)</label>
+                    <input asp-for="WeightLbs" class="form-control" />
+                    <span asp-validation-for="WeightLbs" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="BMI" class="form-label">BMI</label>
+                    <input asp-for="BMI" class="form-control" />
+                    <span asp-validation-for="BMI" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="BodyFatPercent" class="form-label">Body Fat %</label>
+                    <input asp-for="BodyFatPercent" class="form-control" />
+                    <span asp-validation-for="BodyFatPercent" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="MuscleMassLbs" class="form-label">Muscle Mass (lbs)</label>
+                    <input asp-for="MuscleMassLbs" class="form-control" />
+                    <span asp-validation-for="MuscleMassLbs" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="SkeletalMuscleMassLbs" class="form-label">Skeletal Muscle (lbs)</label>
+                    <input asp-for="SkeletalMuscleMassLbs" class="form-control" />
+                    <span asp-validation-for="SkeletalMuscleMassLbs" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="BoneMassLbs" class="form-label">Bone Mass (lbs)</label>
+                    <input asp-for="BoneMassLbs" class="form-control" />
+                    <span asp-validation-for="BoneMassLbs" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="LeanBodyMassLbs" class="form-label">Lean Mass (lbs)</label>
+                    <input asp-for="LeanBodyMassLbs" class="form-control" />
+                    <span asp-validation-for="LeanBodyMassLbs" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="BodyFatMassLbs" class="form-label">Fat Mass (lbs)</label>
+                    <input asp-for="BodyFatMassLbs" class="form-control" />
+                    <span asp-validation-for="BodyFatMassLbs" class="text-danger"></span>
+                </div>
+
+                <div class="col-12">
+                    <h5 class="mt-4 border-bottom pb-1">💓 Vitals</h5>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="HeartRate" class="form-label">Heart Rate (bpm)</label>
+                    <input asp-for="HeartRate" class="form-control" />
+                    <span asp-validation-for="HeartRate" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="BMRKcal" class="form-label">BMR (kcal)</label>
+                    <input asp-for="BMRKcal" class="form-control" />
+                    <span asp-validation-for="BMRKcal" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="VisceralFat" class="form-label">Visceral Fat</label>
+                    <input asp-for="VisceralFat" class="form-control" />
+                    <span asp-validation-for="VisceralFat" class="text-danger"></span>
+                </div>
+
+                <div class="col-12">
+                    <h5 class="mt-4 border-bottom pb-1">💧 Composition & Age</h5>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="WaterPercent" class="form-label">Water %</label>
+                    <input asp-for="WaterPercent" class="form-control" />
+                    <span asp-validation-for="WaterPercent" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="ProteinPercent" class="form-label">Protein %</label>
+                    <input asp-for="ProteinPercent" class="form-control" />
+                    <span asp-validation-for="ProteinPercent" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="SubcutaneousFatPercent" class="form-label">Subcutaneous Fat %</label>
+                    <input asp-for="SubcutaneousFatPercent" class="form-control" />
+                    <span asp-validation-for="SubcutaneousFatPercent" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="BodyAgeYears" class="form-label">Body Age</label>
+                    <input asp-for="BodyAgeYears" class="form-control" />
+                    <span asp-validation-for="BodyAgeYears" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="BodyType" class="form-label">Body Type</label>
+                    <input asp-for="BodyType" class="form-control" />
+                    <span asp-validation-for="BodyType" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success">💾 Save</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,49 @@
+﻿@model HESDashboard.Models.DailyMetric
+@{
+    ViewData["Title"] = "Delete Entry";
+}
+
+<h2 class="mb-4 text-danger">🗑️ Confirm Deletion</h2>
+
+<div class="alert alert-warning">
+    <strong>Warning:</strong> You are about to permanently delete the metric recorded on
+    <strong>@Model.Date?.ToString("yyyy-MM-dd")</strong>. This action cannot be undone.
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-light fw-bold">
+        Entry Summary
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <tbody>
+                <tr>
+                    <th scope="row">Weight</th>
+                    <td>@Model.WeightLbs?.ToString("F1") lbs</td>
+                </tr>
+                <tr>
+                    <th scope="row">BMI</th>
+                    <td>@Model.BMI?.ToString("F1")</td>
+                </tr>
+                <tr>
+                    <th scope="row">Body Fat %</th>
+                    <td>@Model.BodyFatPercent?.ToString("F1")%</td>
+                </tr>
+                <tr>
+                    <th scope="row">Heart Rate</th>
+                    <td>@Model.HeartRate bpm</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post" class="d-flex gap-2">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">
+        🗑️ Confirm Delete
+    </button>
+    <a asp-action="Index" class="btn btn-secondary">
+        Cancel
+    </a>
+</form>

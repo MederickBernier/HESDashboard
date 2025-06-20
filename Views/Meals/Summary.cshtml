@@ -1,0 +1,53 @@
+﻿@model List<HESDashboard.ViewModels.MealDaySummaryViewModel>
+@{
+    ViewData["Title"] = "Meal Summary by Day";
+}
+
+<h2 class="mb-4 text-accent">📆 Meal Summary by Day</h2>
+
+@if (Model?.Any() != true)
+{
+    <div class="alert alert-info">
+        No meal data available for the selected period.
+    </div>
+}
+else
+{
+    @foreach (var day in Model)
+    {
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header bg-light fw-bold">
+                <span class="me-2">@day.Date.ToString("dddd, MMMM dd, yyyy")</span>
+                <span>🍽️ @day.Meals.Count meal(s)</span>
+                <span class="ms-3">🔥 @day.TotalCalories kcal</span>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush mb-3">
+                    @foreach (var meal in day.Meals)
+                    {
+                        <li class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                            <div>
+                                <strong>@meal.MealType</strong> – @meal.Calories kcal
+                                @if (!string.IsNullOrWhiteSpace(meal.Mood))
+                                {
+                                    <span class="ms-2">🧠 Mood: <em>@meal.Mood</em></span>
+                                }
+                                @if (meal.SatietyBefore.HasValue && meal.SatietyAfter.HasValue)
+                                {
+                                    <span class="ms-2">🍽️ Satiety: @meal.SatietyBefore → @meal.SatietyAfter</span>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+
+                @if (!string.IsNullOrWhiteSpace(day.NotesSummary))
+                {
+                    <div class="small text-muted">
+                        📝 <strong>Notes:</strong> @day.NotesSummary
+                    </div>
+                }
+            </div>
+        </div>
+    }
+}

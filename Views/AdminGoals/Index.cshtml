@@ -1,0 +1,35 @@
+﻿@model IEnumerable<HESDashboard.Models.HesGoal>
+@{
+    ViewData["Title"] = "Manage HES Goals";
+}
+
+<h2 class="mb-4 text-accent">🎯 HES Goals</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">➕ Add New Goal</a>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Description</th>
+                <th>Associated Phase</th>
+                <th style="width: 15%">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var goal in Model)
+            {
+                <tr>
+                    <td>@goal.Description</td>
+                    <td>@goal.Phase?.Name ?? "<em>Unassigned</em>"</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a asp-action="Edit" asp-route-id="@goal.Id" class="btn btn-sm btn-warning">✏️ Edit</a>
+                            <a asp-action="Delete" asp-route-id="@goal.Id" class="btn btn-sm btn-danger">🗑️ Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,26 @@
+﻿@model HESDashboard.Models.Training
+@{
+    ViewData["Title"] = "Delete Training";
+}
+
+<h2 class="text-danger mb-4">🗑️ Confirm Deletion</h2>
+
+<div class="alert alert-warning">
+    <p>
+        Are you sure you want to delete this training session from
+        <strong class="text-dark">@Model.Date.ToString("yyyy-MM-dd")</strong>?
+    </p>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="d-flex gap-3">
+        <button type="submit" class="btn btn-danger">
+            <i class="bi bi-trash-fill me-1"></i> Yes, Delete
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle me-1"></i> Cancel
+        </a>
+    </div>
+</form>

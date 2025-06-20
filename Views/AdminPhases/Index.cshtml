@@ -1,0 +1,39 @@
+﻿@model IEnumerable<HESDashboard.Models.HesPhase>
+@{
+    ViewData["Title"] = "Manage HES Phases";
+}
+
+<h2 class="mb-4 text-accent">📅 HES Phases</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">➕ Add New Phase</a>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th class="text-center" style="width: 150px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var phase in Model)
+                    {
+                        <tr>
+                            <td>@phase.Name</td>
+                            <td>@phase.Description</td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-2">
+                                    <a asp-action="Edit" asp-route-id="@phase.Id" class="btn btn-sm btn-warning">✏️ Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@phase.Id" class="btn btn-sm btn-danger">🗑️ Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

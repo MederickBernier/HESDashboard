@@ -1,0 +1,64 @@
+﻿@model HESDashboard.Models.HesPhase
+
+@{
+    ViewData["Title"] = "Create Phase";
+}
+
+<h2 class="mb-4 text-accent">➕ Create New Phase</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Phase Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Description</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Order" class="form-label">Order</label>
+        <input asp-for="Order" type="number" class="form-control" />
+        <span asp-validation-for="Order" class="text-danger"></span>
+    </div>
+
+    <div class="form-check form-switch mb-4">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label">Active Phase</label>
+    </div>
+
+    <h4 class="mb-3">🚩 Exit Conditions</h4>
+    <div id="exit-conditions-container">
+        <!-- Exit condition blocks will be added here -->
+    </div>
+
+    <button type="button" class="btn btn-outline-primary mb-4" onclick="addExitCondition()">+ Add Exit Condition</button>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">💾 Save</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        let exitConditionIndex = 0;
+
+        function addExitCondition() {
+            const container = document.getElementById("exit-conditions-container");
+            const div = document.createElement("div");
+            div.classList.add("mb-3", "border", "p-3", "rounded", "shadow-sm", "bg-light");
+
+            div.innerHTML = `
+                <label class="form-label fw-semibold">Condition Description</label>
+                <input class="form-control" name="ExitConditions[${exitConditionIndex}].ConditionDescription" placeholder="Enter exit condition" required />
+            `;
+
+            container.appendChild(div);
+            exitConditionIndex++;
+        }
+    </script>
+}

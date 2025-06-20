@@ -1,0 +1,117 @@
+﻿@model List<HESDashboard.Models.HesPhase>
+
+@{
+    ViewData["Title"] = "All Phases & Goals";
+    var hasPhases = Model.Any();
+}
+
+<h2 class="mb-4 text-accent">📋 All Phases & Their Goals</h2>
+
+@if (!hasPhases)
+{
+    <p class="text-muted">No phases defined yet. Add some in your configuration.</p>
+}
+else
+{
+    <div class="accordion" id="phasesAccordion">
+        @foreach (var phase in Model.OrderBy(p => p.Order))
+        {
+            var phaseId = $"phase-{phase.Id}";
+            <div class="accordion-item mb-3 shadow-sm">
+                <h2 class="accordion-header" id="heading-@phaseId">
+                    <button class="accordion-button @(!phase.IsActive ? "collapsed bg-light text-muted" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapse-@phaseId"
+                            aria-expanded="true"
+                            aria-controls="collapse-@phaseId">
+                        <div class="fw-bold">
+                            Phase @phase.Order: @phase.Name
+                            <span class="badge ms-2 @(phase.IsActive ? "bg-success" : "bg-secondary")">
+                                @(phase.IsActive ? "Active" : "Inactive")
+                            </span>
+                        </div>
+                    </button>
+                </h2>
+                <div id="collapse-@phaseId"
+                     class="accordion-collapse collapse"
+                     aria-labelledby="heading-@phaseId"
+                     data-bs-parent="#phasesAccordion">
+                    <div class="accordion-body">
+
+                        @if (!string.IsNullOrWhiteSpace(phase.Description))
+                        {
+                            <p class="text-muted mb-4">@phase.Description</p>
+                        }
+
+                        <!-- 🎯 Goals -->
+                        <h6 class="text-primary fw-semibold mb-2">🎯 Goals</h6>
+                        @if (phase.Goals?.Any() == true)
+                        {
+                            <ul class="list-group list-group-flush mb-4">
+                                @foreach (var goal in phase.Goals)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between flex-column flex-md-row">
+                                        <div>
+                                            <strong>@goal.Description</strong>
+                                            <div class="mt-1 small text-muted d-flex flex-wrap gap-2">
+                                                @if (!string.IsNullOrWhiteSpace(goal.Tags))
+                                                {
+                                                    <span class="badge bg-info text-dark">@goal.Tags</span>
+                                                }
+                                                @if (!string.IsNullOrWhiteSpace(goal.BehaviorTrigger))
+                                                {
+                                                    <span class="badge bg-warning text-dark">Trigger: @goal.BehaviorTrigger</span>
+                                                }
+                                                @if (!string.IsNullOrWhiteSpace(goal.ConditionKey))
+                                                {
+                                                    <span class="badge bg-secondary">
+                                                        Condition: @goal.ConditionKey = @goal.ConditionValue
+                                                    </span>
+                                                }
+                                            </div>
+                                        </div>
+                                        <span class="badge mt-2 mt-md-0 @(goal.IsActive ? "bg-success" : "bg-dark") align-self-start align-self-md-center">
+                                            @(goal.IsActive ? "Active" : "Disabled")
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted">No goals defined for this phase.</p>
+                        }
+
+                        <!-- 📌 Exit Conditions -->
+                        <h6 class="text-primary fw-semibold mb-2 mt-3">📌 Exit Conditions</h6>
+                        @if (phase.ExitConditions?.Any() == true)
+                        {
+                            <ul class="list-group list-group-flush">
+                                @foreach (var condition in phase.ExitConditions)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between flex-column flex-md-row">
+                                        <div>@condition.ConditionDescription</div>
+                                        <div class="d-flex gap-2 mt-2 mt-md-0">
+                                            <span class="badge @(condition.IsRequired ? "bg-danger" : "bg-secondary")">
+                                                @(condition.IsRequired ? "Required" : "Optional")
+                                            </span>
+                                            <span class="badge @(condition.IsMet ? "bg-success" : "bg-warning text-dark")">
+                                                @(condition.IsMet ? "Met" : "Not Met")
+                                            </span>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        }
+                        else
+                        {
+                            <p class="text-muted">No exit conditions defined for this phase.</p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

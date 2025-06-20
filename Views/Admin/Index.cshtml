@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Admin Panel";
+}
+
+<h2 class="mb-4 text-accent">🛠️ HES Admin Panel</h2>
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col">
+        <a asp-controller="AdminTags" asp-action="Index" class="btn btn-outline-primary w-100">
+            🏷️ Manage Tags
+        </a>
+    </div>
+    <div class="col">
+        <a asp-controller="AdminGoals" asp-action="Index" class="btn btn-outline-success w-100">
+            🎯 Manage Goals
+        </a>
+    </div>
+    <div class="col">
+        <a asp-controller="AdminPhases" asp-action="Index" class="btn btn-outline-warning w-100">
+            📅 Setup HES Phases
+        </a>
+    </div>
+    <div class="col">
+        <a asp-controller="AdminThresholds" asp-action="Index" class="btn btn-outline-danger w-100">
+            ⚠️ Threshold Rules
+        </a>
+    </div>
+    <div class="col">
+        <a asp-controller="AdminTools" asp-action="Export" class="btn btn-outline-dark w-100">
+            💾 Download Backup (JSON)
+        </a>
+    </div>
+    <div class="col">
+        <a asp-controller="AdminWeeklyReport" asp-action="Index" class="btn btn-outline-info w-100">
+            📅 Generate Weekly Report
+        </a>
+    </div>
+    @* Future: Reactivate if forecast settings are implemented *@
+    @* 
+    <div class="col">
+        <a asp-controller="Reports" asp-action="Settings" class="btn btn-outline-secondary w-100">
+            📊 Report & Forecast Settings
+        </a>
+    </div>
+    *@
+</div>

@@ -1,0 +1,20 @@
+﻿@model DateTime
+
+@{
+    var span = DateTime.Now - Model;
+    string colorClass;
+    string icon = "<i class='bi bi-hourglass-split me-1'></i>";
+
+    if (span.TotalMinutes < 180)
+        colorClass = "text-secondary";
+    else if (span.TotalMinutes < 300)
+        colorClass = "text-warning";
+    else
+        colorClass = "text-danger";
+
+    var formatted = $"{(int)span.TotalHours:D2}:{span.Minutes:D2}:{span.Seconds:D2}";
+}
+
+<span class="navbar-text @colorClass fw-semibold ms-2 me-4 fs-6">
+    @Html.Raw(icon)<strong>@formatted</strong>
+</span>

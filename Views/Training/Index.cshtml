@@ -1,0 +1,86 @@
+﻿@model IEnumerable<HESDashboard.Models.Training>
+@{
+    ViewData["Title"] = "Trainings";
+}
+
+<h2 class="mb-4 text-accent">🏃‍♂️ Training Log</h2>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <a class="btn btn-primary" asp-action="Create">➕ Add Training</a>
+</div>
+
+<table class="table table-bordered table-hover shadow-sm align-middle">
+    <thead class="table-light">
+        <tr>
+            <th>Date</th>
+            <th>Type</th>
+            <th>Duration</th>
+            <th>Distance (km)</th>
+            <th>Calories</th>
+            <th>Avg Speed (km/h)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderByDescending(t => t.Date))
+        {
+            var rowId = $"expand-{item.Id}";
+            var jsonId = $"json-{item.Id}";
+            <tr>
+                <td>@item.Date.ToShortDateString()</td>
+                <td>@item.Timeframe</td>
+                <td>@TimeSpan.FromSeconds(item.DurationSeconds).ToString(@"hh\:mm\:ss")</td>
+                <td>@(item.DistanceKm.HasValue ? item.DistanceKm.Value.ToString("F2") : "-")</td>
+                <td>@item.Calories</td>
+                <td>@(item.AvgSpeedKmh.HasValue ? item.AvgSpeedKmh.Value.ToString("F1") : "-")</td>
+                <td>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-secondary"
+                                title="Expand Details"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#@rowId"
+                                aria-expanded="false"
+                                aria-controls="@rowId">Expand</button>
+                        <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-id="@item.Id" title="View Details">View</a>
+                        <a class="btn btn-sm btn-outline-secondary" asp-action="Edit" asp-route-id="@item.Id" title="Edit Training">Edit</a>
+                        <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id" title="Delete Entry">Delete</a>
+                    </div>
+                </td>
+            </tr>
+            <tr class="collapse" id="@rowId">
+                <td colspan="7" class="bg-light-subtle">
+                    <div class="row g-3 p-3">
+                        <div class="col-md-4"><strong>Steps:</strong> @item.Steps</div>
+                        <div class="col-md-4"><strong>Calories:</strong> @item.Calories</div>
+                        <div class="col-md-4"><strong>Avg Pace:</strong> @item.AvgPace</div>
+                        <div class="col-md-4"><strong>Max Pace:</strong> @item.MaxPace</div>
+                        <div class="col-md-4"><strong>Elevation (Min/Max):</strong> @item.ElevationMinM / @item.ElevationMaxM</div>
+                        <div class="col-md-4"><strong>Total Ascent:</strong> @item.TotalAscentKm</div>
+                        <div class="col-md-4"><strong>Heart Rate (Avg/Max):</strong> @item.HeartRateAvg / @item.HeartRateMax</div>
+                        <div class="col-md-4"><strong>Cadence (Avg/Max):</strong> @item.CadenceAvg / @item.CadenceMax</div>
+                        <div class="col-md-4"><strong>Temperature (°C):</strong> @item.TemperatureC</div>
+                        <div class="col-md-4"><strong>Water Drank:</strong> @item.WaterMl ml</div>
+                        <div class="col-md-4"><strong>Pain Score:</strong> @item.PainScore</div>
+                        <div class="col-md-4"><strong>Mood:</strong> @item.MoodAfter</div>
+                        <div class="col-md-4"><strong>Weather:</strong> @item.Weather</div>
+                        <div class="col-md-12 mt-3">
+                            <button class="btn btn-sm btn-outline-info" type="button" onclick="toggleJson('@jsonId')">View JSON</button>
+                            <pre id="@jsonId" class="mt-2 p-3 bg-dark text-white small rounded d-none" style="white-space: pre-wrap;">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }))</pre>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script>
+        function toggleJson(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.toggle("d-none");
+            }
+        }
+    </script>
+}

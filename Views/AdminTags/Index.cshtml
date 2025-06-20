@@ -1,0 +1,37 @@
+﻿@model IEnumerable<HESDashboard.Models.Tag>
+@{
+    ViewData["Title"] = "Tags";
+}
+
+<h2 class="mb-4 text-accent">🏷️ Tags Management</h2>
+
+<a class="btn btn-success mb-3" asp-action="Create">➕ New Tag</a>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-bordered table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col" class="text-center" style="width: 150px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tag in Model)
+                {
+                    <tr>
+                        <td>@tag.Name</td>
+                        <td>@tag.Category</td>
+                        <td class="text-center">
+                            <a asp-action="Edit" asp-route-id="@tag.Id" class="btn btn-sm btn-outline-primary me-1">✏️</a>
+                            <a asp-action="Delete" asp-route-id="@tag.Id" 
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Are you sure you want to delete this tag?');">🗑️</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
