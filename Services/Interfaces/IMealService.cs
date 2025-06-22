@@ -1,7 +1,7 @@
 ﻿using HESDashboard.Models;
 using HESDashboard.ViewModels;
 
-namespace HESDashboard.Services;
+namespace HESDashboard.Services.Interfaces;
 
 public interface IMealService {
     Task<List<Meal>> GetAllMealsAsync();

@@ -17,6 +17,7 @@ public class HesDbContext : DbContext {
     public DbSet<HesPhaseExitCondition> HesPhaseExitConditions { get; set; }
     public DbSet<MedicationCatalog> MedicationCatalogs { get; set; }
     public DbSet<MedicationEntry> MedicationEntries { get; set; }
+    public DbSet<SleepTrackingEntry> SleepTrackingEntries { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {

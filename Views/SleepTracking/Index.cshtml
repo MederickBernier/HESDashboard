@@ -1,0 +1,37 @@
+﻿@model List<HESDashboard.Models.SleepTrackingEntry>
+
+@{
+    ViewData["Title"] = "Sleep Tracking";
+}
+
+<h2>Sleep Tracking Entries</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">➕ Add New Entry</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Total Sleep</th>
+            <th>REM (%)</th>
+            <th>Heart Rate</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var entry in Model)
+    {
+        <tr>
+            <td>@entry.Date</td>
+            <td>@entry.ActualSleepTime?.ToString(@"hh\:mm")</td>
+            <td>@entry.PercentREM?.ToString("0.0")%</td>
+            <td>@entry.AvgHeartRate</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@entry.Id">Details</a> |
+                <a asp-action="Edit" asp-route-id="@entry.Id">Edit</a> |
+                <a asp-action="Delete" asp-route-id="@entry.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

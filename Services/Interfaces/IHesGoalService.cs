@@ -1,6 +1,6 @@
 ﻿using HESDashboard.Models;
 
-namespace HESDashboard.Services;
+namespace HESDashboard.Services.Interfaces;
 
 public interface IHesGoalService {
     Task<List<HesGoal>> GetAllAsync(int? phaseId = null);

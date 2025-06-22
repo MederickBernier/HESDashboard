@@ -1,0 +1,62 @@
+﻿@model HESDashboard.ViewModels.SleepTrackingEntryFormViewModel
+
+@{
+    ViewData["Title"] = "Delete Sleep Entry";
+}
+
+<h2 class="text-danger">⚠️ Confirm Deletion</h2>
+<h4>Are you sure you want to delete this sleep entry?</h4>
+
+<div class="card shadow p-4 bg-light mt-3">
+    <dl class="row">
+
+        <dt class="col-sm-4">📅 Date</dt>
+        <dd class="col-sm-8">@Model.Date?.ToString("yyyy-MM-dd")</dd>
+
+        <dt class="col-sm-4">🕒 Start of Sleep</dt>
+        <dd class="col-sm-8">@Model.StartOfSleep?.ToString("g")</dd>
+
+        <dt class="col-sm-4">🕒 End of Sleep</dt>
+        <dd class="col-sm-8">@Model.EndOfSleep?.ToString("g")</dd>
+
+        <dt class="col-sm-4">🛏️ Total Time in Bed</dt>
+        <dd class="col-sm-8">@($"{Model.TotalTimeInBed_Hours}h {Model.TotalTimeInBed_Minutes}m")</dd>
+
+        <dt class="col-sm-4">😴 Actual Sleep Time</dt>
+        <dd class="col-sm-8">@($"{Model.ActualSleep_Hours}h {Model.ActualSleep_Minutes}m")</dd>
+
+        <dt class="col-sm-4">👀 Time Awake</dt>
+        <dd class="col-sm-8">@($"{Model.TimeAwake_Hours}h {Model.TimeAwake_Minutes}m")</dd>
+
+        <dt class="col-sm-4">🌙 REM Sleep</dt>
+        <dd class="col-sm-8">@($"{Model.PercentREM}% — {Model.TimeREM_Hours}h {Model.TimeREM_Minutes}m")</dd>
+
+        <dt class="col-sm-4">🌖 Light Sleep</dt>
+        <dd class="col-sm-8">@($"{Model.PercentLight}% — {Model.TimeLight_Hours}h {Model.TimeLight_Minutes}m")</dd>
+
+        <dt class="col-sm-4">🌑 Deep Sleep</dt>
+        <dd class="col-sm-8">@($"{Model.PercentDeep}% — {Model.TimeDeep_Hours}h {Model.TimeDeep_Minutes}m")</dd>
+
+        <dt class="col-sm-4">🩸 Lowest Blood Oxygen</dt>
+        <dd class="col-sm-8">@Model.LowestBloodOxygen%</dd>
+
+        <dt class="col-sm-4">🌡️ Highest Skin Temperature</dt>
+        <dd class="col-sm-8">@Model.HighestSkinTemp °C</dd>
+
+        <dt class="col-sm-4">🌡️ Lowest Skin Temperature</dt>
+        <dd class="col-sm-8">@Model.LowestSkinTemp °C</dd>
+
+        <dt class="col-sm-4">❤️ Average Heart Rate</dt>
+        <dd class="col-sm-8">@Model.AvgHeartRate bpm</dd>
+
+        <dt class="col-sm-4">💨 Average Respiratory Rate</dt>
+        <dd class="col-sm-8">@Model.AvgRespiratoryRate breaths/min</dd>
+
+    </dl>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">🗑️ Confirm Delete</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">🔙 Cancel</a>
+    </form>
+</div>

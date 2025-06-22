@@ -1,5 +1,6 @@
 ﻿using HESDashboard.Data;
 using HESDashboard.Models;
+using HESDashboard.Services.Interfaces;
 using HESDashboard.ViewModels;
 using Microsoft.EntityFrameworkCore;
 

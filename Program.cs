@@ -1,5 +1,6 @@
 ﻿using HESDashboard.Data;
 using HESDashboard.Services;
+using HESDashboard.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -42,6 +43,7 @@ namespace HESDashboard {
             //builder.Services.AddScoped<IForecastEngine, ForecastEngine>(); it's for the engine but not fully ready
             builder.Services.AddScoped<IForecastService, ForecastService>();
             builder.Services.AddScoped<IMedicationService, MedicationService>();
+            builder.Services.AddScoped<ISleepTrackingService, SleepTrackingService>();
 
             var app = builder.Build();
 

@@ -1,7 +1,7 @@
 ﻿using HESDashboard.Models;
 using Microsoft.Data.SqlClient.DataClassification;
 
-namespace HESDashboard.Services;
+namespace HESDashboard.Services.Interfaces;
 
 public interface IMedicationService {
     // Catalog

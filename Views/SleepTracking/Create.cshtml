@@ -1,0 +1,137 @@
+﻿@model HESDashboard.ViewModels.SleepTrackingEntryFormViewModel
+
+@{
+    ViewData["Title"] = "Create Sleep Entry";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form asp-action="Create" method="post" class="row g-3 shadow p-4 rounded bg-light">
+    @if (Model.Id.HasValue)
+    {
+        @Html.HiddenFor(m => m.Id)
+    }
+
+    <div class="col-md-4">
+        <label asp-for="Date" class="form-label"></label>
+        <input asp-for="Date" class="form-control" type="date" />
+        <span asp-validation-for="Date" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="StartOfSleep" class="form-label"></label>
+        <input asp-for="StartOfSleep" class="form-control" type="datetime-local" />
+        <span asp-validation-for="StartOfSleep" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-4">
+        <label asp-for="EndOfSleep" class="form-label"></label>
+        <input asp-for="EndOfSleep" class="form-control" type="datetime-local" />
+        <span asp-validation-for="EndOfSleep" class="text-danger"></span>
+    </div>
+
+    <hr class="mt-4" />
+    <h4>🛏️ Sleep Durations</h4>
+
+    <div class="col-md-2">
+        <label asp-for="TotalTimeInBed_Hours" class="form-label"></label>
+        <input asp-for="TotalTimeInBed_Hours" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="TotalTimeInBed_Minutes" class="form-label"></label>
+        <input asp-for="TotalTimeInBed_Minutes" class="form-control" />
+    </div>
+
+    <div class="col-md-2">
+        <label asp-for="ActualSleep_Hours" class="form-label"></label>
+        <input asp-for="ActualSleep_Hours" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="ActualSleep_Minutes" class="form-label"></label>
+        <input asp-for="ActualSleep_Minutes" class="form-control" />
+    </div>
+
+    <div class="col-md-2">
+        <label asp-for="TimeAwake_Hours" class="form-label"></label>
+        <input asp-for="TimeAwake_Hours" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="TimeAwake_Minutes" class="form-label"></label>
+        <input asp-for="TimeAwake_Minutes" class="form-control" />
+    </div>
+
+    <hr class="mt-4" />
+    <h4>🌙 Sleep Stages</h4>
+
+    <div class="col-md-2">
+        <label asp-for="PercentREM" class="form-label"></label>
+        <input asp-for="PercentREM" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="TimeREM_Hours" class="form-label"></label>
+        <input asp-for="TimeREM_Hours" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="TimeREM_Minutes" class="form-label"></label>
+        <input asp-for="TimeREM_Minutes" class="form-control" />
+    </div>
+
+    <div class="col-md-2">
+        <label asp-for="PercentLight" class="form-label"></label>
+        <input asp-for="PercentLight" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="TimeLight_Hours" class="form-label"></label>
+        <input asp-for="TimeLight_Hours" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="TimeLight_Minutes" class="form-label"></label>
+        <input asp-for="TimeLight_Minutes" class="form-control" />
+    </div>
+
+    <div class="col-md-2">
+        <label asp-for="PercentDeep" class="form-label"></label>
+        <input asp-for="PercentDeep" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="TimeDeep_Hours" class="form-label"></label>
+        <input asp-for="TimeDeep_Hours" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label asp-for="TimeDeep_Minutes" class="form-label"></label>
+        <input asp-for="TimeDeep_Minutes" class="form-control" />
+    </div>
+
+    <hr class="mt-4" />
+    <h4>📊 Health Metrics</h4>
+
+    <div class="col-md-3">
+        <label asp-for="LowestBloodOxygen" class="form-label"></label>
+        <input asp-for="LowestBloodOxygen" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="HighestSkinTemp" class="form-label"></label>
+        <input asp-for="HighestSkinTemp" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="LowestSkinTemp" class="form-label"></label>
+        <input asp-for="LowestSkinTemp" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="AvgHeartRate" class="form-label"></label>
+        <input asp-for="AvgHeartRate" class="form-control" />
+    </div>
+
+    <div class="col-md-3">
+        <label asp-for="AvgRespiratoryRate" class="form-label"></label>
+        <input asp-for="AvgRespiratoryRate" class="form-control" />
+    </div>
+
+    <div class="col-12 mt-4">
+        <button type="submit" class="btn btn-success">💾 Save</button>
+        <a asp-action="Index" class="btn btn-secondary ms-2">🔙 Cancel</a>
+    </div>
+</form>

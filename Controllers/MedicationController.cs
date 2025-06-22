@@ -1,5 +1,5 @@
 ﻿using HESDashboard.Models;
-using HESDashboard.Services;
+using HESDashboard.Services.Interfaces;
 using HESDashboard.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;

@@ -1,6 +1,6 @@
 ﻿using HESDashboard.Data;
 using HESDashboard.Models;
-using HESDashboard.Services;
+using HESDashboard.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HESDashboard.Controllers.Admin;

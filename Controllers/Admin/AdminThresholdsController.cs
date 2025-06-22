@@ -1,5 +1,5 @@
 ﻿using HESDashboard.Models;
-using HESDashboard.Services;
+using HESDashboard.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection.Metadata.Ecma335;
 

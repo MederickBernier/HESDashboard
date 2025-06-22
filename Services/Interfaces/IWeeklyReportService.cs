@@ -1,6 +1,6 @@
 ﻿using HESDashboard.Models;
 
-namespace HESDashboard.Services;
+namespace HESDashboard.Services.Interfaces;
 
 public interface IWeeklyReportService {
     Task<List<WeeklyReportDTO>> GenerateWeeklyReportsAsync();
