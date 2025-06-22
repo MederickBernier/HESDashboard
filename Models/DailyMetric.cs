@@ -55,4 +55,22 @@ public class DailyMetric {
     [Required, MaxLength(20)]
     [Display(Name = "Body Type")]
     public string BodyType { get; set; } = string.Empty;
+
+    [Display(Name = "Systolic Blood Pressure (mmHg)")]
+    public int? SystolicBP { get; set; }
+
+    [Display(Name = "Diastolic Blood Pressure (mmHg)")]
+    public int? DiastolocBP { get; set; }
+
+    [Display(Name = "Blood Sugar (mg/dL)")]
+    public double? BloodSugarMgDl { get; set; }
+
+    [Display(Name = "Resting Oxygen (%)")]
+    public double? RestingOxygenPercent { get; set; }
+
+    [Display(Name = "Body Temperature (°C)")]
+    public double? BodyTemperatureC { get; set; }
+
+    [Display(Name = "Pulse Rate (bpm)")]
+    public int? PulseRate { get; set; }
 }

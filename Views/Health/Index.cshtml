@@ -60,6 +60,12 @@
                             <div class="col-md-3"><strong>Subcutaneous Fat %:</strong> @item.SubcutaneousFatPercent?.ToString("F1")</div>
                             <div class="col-md-3"><strong>Body Age:</strong> @item.BodyAgeYears</div>
                             <div class="col-md-3"><strong>Body Type:</strong> @item.BodyType</div>
+                            <div class="col-md-3"><strong>Systolic BP:</strong> @item.SystolicBP</div>
+                            <div class="col-md-3"><strong>Diastolic BP:</strong> @item.DiastolocBP</div>
+                            <div class="col-md-3"><strong>Blood Sugar (mg/dL):</strong> @item.BloodSugarMgDl?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Resting Oxygen %:</strong> @item.RestingOxygenPercent?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Body Temp (°C):</strong> @item.BodyTemperatureC?.ToString("F1")</div>
+                            <div class="col-md-3"><strong>Pulse Rate:</strong> @item.PulseRate</div>
                             <div class="col-12 mt-3">
                                 <button class="btn btn-sm btn-outline-info" type="button" onclick="toggleJson('@jsonId')">🧾 View JSON</button>
                                 <pre id="@jsonId" class="mt-2 p-2 bg-dark text-white small rounded d-none">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item, new System.Text.Json.JsonSerializerOptions { WriteIndented = true }))</pre>

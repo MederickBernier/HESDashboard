@@ -102,6 +102,34 @@
                     <label asp-for="BodyType" class="form-label">Body Type</label>
                     <input asp-for="BodyType" class="form-control" />
                 </div>
+                <div class="col-12">
+                    <h5 class="mt-4 border-bottom pb-1">🧬 Biometric Vitals</h5>
+                </div>
+
+                <div class="col-md-3">
+                    <label asp-for="SystolicBP" class="form-label">Systolic BP (mmHg)</label>
+                    <input asp-for="SystolicBP" type="number" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="DiastolocBP" class="form-label">Diastolic BP (mmHg)</label>
+                    <input asp-for="DiastolocBP" type="number" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="BloodSugarMgDl" class="form-label">Blood Sugar (mg/dL)</label>
+                    <input asp-for="BloodSugarMgDl" type="number" step="0.1" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="RestingOxygenPercent" class="form-label">Resting Oxygen %</label>
+                    <input asp-for="RestingOxygenPercent" type="number" step="0.1" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="BodyTemperatureC" class="form-label">Body Temp (°C)</label>
+                    <input asp-for="BodyTemperatureC" type="number" step="0.1" class="form-control" />
+                </div>
+                <div class="col-md-3">
+                    <label asp-for="PulseRate" class="form-label">Pulse Rate (bpm)</label>
+                    <input asp-for="PulseRate" type="number" class="form-control" />
+                </div>
             </div>
 
             <div class="mt-4">
