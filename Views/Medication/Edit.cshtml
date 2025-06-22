@@ -1,0 +1,63 @@
+﻿@model HESDashboard.ViewModels.MedicationEntryFormViewModel
+
+@{
+    ViewData["Title"] = "Edit Medication Intake";
+}
+
+<h2 class="mb-4 text-accent">✏️ Edit Medication Intake</h2>
+
+<form asp-action="Edit" method="post" class="card shadow-sm p-4">
+    <input type="hidden" asp-for="Entry.Id" />
+
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label asp-for="Entry.MedicationCatalogId" class="form-label fw-semibold">💊 Medication</label>
+            <select asp-for="Entry.MedicationCatalogId" class="form-select">
+                @foreach (var med in Model.AvailableMedications)
+                {
+                    var selected = med.Id == Model.Entry.MedicationCatalogId ? "selected=\"selected\"" : "";
+                    @:<option value="@med.Id" @Html.Raw(selected)>@med.Name (@med.DefaultDosage)</option>
+                }
+            </select>
+            <span asp-validation-for="Entry.MedicationCatalogId" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Entry.DosageOverride" class="form-label fw-semibold">💉 Dosage Override</label>
+            <input asp-for="Entry.DosageOverride" class="form-control" />
+        </div>
+    </div>
+
+    <hr class="my-4" />
+
+    <div class="row">
+        <div class="col-md-6">
+            <label asp-for="Entry.TimeTaken" class="form-label fw-semibold">🕒 Time Taken</label>
+            <input asp-for="Entry.TimeTaken" class="form-control" type="datetime-local"
+                   value="@Model.Entry.TimeTaken.ToString("yyyy-MM-ddTHH:mm")" />
+        </div>
+
+        <div class="col-md-6 d-flex align-items-center">
+            <div class="form-check mt-4">
+                <input asp-for="Entry.WithFood" class="form-check-input" />
+                <label asp-for="Entry.WithFood" class="form-check-label fw-semibold">🍽️ Taken With Food</label>
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-4" />
+
+    <div class="mb-3">
+        <label asp-for="Entry.Notes" class="form-label fw-semibold">📝 Additional Notes</label>
+        <textarea asp-for="Entry.Notes" class="form-control" rows="3"></textarea>
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Save Changes
+        </button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>

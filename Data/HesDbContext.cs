@@ -15,6 +15,8 @@ public class HesDbContext : DbContext {
     public DbSet<HesThreshold> Thresholds => Set<HesThreshold>();
     public DbSet<GoalEvaluationResult> GoalEvaluationResults => Set<GoalEvaluationResult>();
     public DbSet<HesPhaseExitCondition> HesPhaseExitConditions { get; set; }
+    public DbSet<MedicationCatalog> MedicationCatalogs { get; set; }
+    public DbSet<MedicationEntry> MedicationEntries { get; set; }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {

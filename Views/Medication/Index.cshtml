@@ -1,0 +1,39 @@
+﻿@model IEnumerable<HESDashboard.Models.MedicationEntry>
+@{
+    ViewData["Title"] = "Medication Log";
+}
+
+<h2 class="mb-4 text-accent">💊 Medication Log</h2>
+
+<a asp-action="Create" class="btn btn-success mb-3">
+    <i class="bi bi-plus-circle"></i> Log New Medication
+</a>
+
+<table class="table table-striped shadow-sm">
+    <thead class="table-light">
+        <tr>
+            <th>Medication</th>
+            <th>Dosage</th>
+            <th>Time Taken</th>
+            <th>With Food</th>
+            <th>Notes</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var entry in Model)
+        {
+            <tr>
+                <td>@entry.Medication?.Name</td>
+                <td>@(entry.DosageOverride ?? entry.Medication?.DefaultDosage)</td>
+                <td>@entry.TimeTaken.ToString("g")</td>
+                <td>@(entry.WithFood ? "Yes" : "No")</td>
+                <td>@entry.Notes</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@entry.Id" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@entry.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

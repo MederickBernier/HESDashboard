@@ -41,6 +41,7 @@ namespace HESDashboard {
             builder.Services.AddScoped<ITrainingService, TrainingService>();
             //builder.Services.AddScoped<IForecastEngine, ForecastEngine>(); it's for the engine but not fully ready
             builder.Services.AddScoped<IForecastService, ForecastService>();
+            builder.Services.AddScoped<IMedicationService, MedicationService>();
 
             var app = builder.Build();
 
