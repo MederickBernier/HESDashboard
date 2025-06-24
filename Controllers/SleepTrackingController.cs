@@ -15,9 +15,9 @@ public class SleepTrackingController : Controller {
     }
 
     public async Task<IActionResult> Details(int id) {
-        var entry = await _service.GetByIdAsync(id);
+        Models.SleepTrackingEntry? entry = await _service.GetByIdAsync(id);
         if (entry == null) return NotFound();
-        return View(entry);
+        return View(entry.ToViewModel());
     }
 
     public IActionResult Create() => View(new SleepTrackingEntryFormViewModel());
