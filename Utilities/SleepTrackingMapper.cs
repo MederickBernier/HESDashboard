@@ -57,6 +57,19 @@ public static class SleepTrackingMapper {
             AvgRespiratoryRate = entry.AvgRespiratoryRate
         };
     }
+    public static SleepTrackingEntryViewModel ToDisplayViewModel(this SleepTrackingEntry entry) {
+        return new SleepTrackingEntryViewModel {
+            Id = entry.Id,
+            Date = entry.Date,
+            TotalTimeInBedMinutes = (int?)entry.TotalTimeInBed?.TotalMinutes,
+            ActualSleepMinutes = (int?)entry.ActualSleepTime?.TotalMinutes,
+            PercentAwake = entry.PercentAwake,
+            PercentREM = entry.PercentREM,
+            PercentLight = entry.PercentLight,
+            PercentDeep = entry.PercentDeep
+        };
+    }
+
     private static TimeSpan? FromHrsMins(int? hrs, int? mins) {
         if (hrs == null && mins == null)
             return null;

@@ -1,5 +1,8 @@
 ﻿using HESDashboard.Data;
+using HESDashboard.DTOs;
+using HESDashboard.Models;
 using HESDashboard.Services;
+using HESDashboard.Services.Exports;
 using HESDashboard.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +47,9 @@ namespace HESDashboard {
             builder.Services.AddScoped<IForecastService, ForecastService>();
             builder.Services.AddScoped<IMedicationService, MedicationService>();
             builder.Services.AddScoped<ISleepTrackingService, SleepTrackingService>();
+
+            // Register Export Services
+            builder.Services.AddScoped<IExportService<SleepTrackingEntry, SleepTrackingExportDTO>, SleepExportService>();
 
             var app = builder.Build();
 

@@ -1,37 +1,51 @@
-﻿@model List<HESDashboard.Models.SleepTrackingEntry>
-
+﻿@model IEnumerable<HESDashboard.ViewModels.SleepTrackingEntryViewModel>
 @{
     ViewData["Title"] = "Sleep Tracking";
 }
 
-<h2>Sleep Tracking Entries</h2>
+<h2 class="mb-4">😴 Sleep Tracking Entries</h2>
 
-<a asp-action="Create" class="btn btn-primary mb-3">➕ Add New Entry</a>
+<div class="mb-3 d-flex gap-2">
+    <a asp-action="Create" class="btn btn-primary">➕ New Entry</a>
+    <a asp-action="ExportAll" class="btn btn-success" target="_blank">📤 Export All</a>
+</div>
 
-<table class="table table-striped">
+<form asp-action="ExportRange" method="get" class="row g-2 mb-4">
+    <div class="col-auto">
+        <input name="from" type="date" class="form-control" required />
+    </div>
+    <div class="col-auto">
+        <input name="to" type="date" class="form-control" required />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-outline-info" formtarget="_blank">📤 Export Range</button>
+    </div>
+</form>
+
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>Date</th>
-            <th>Total Sleep</th>
-            <th>REM (%)</th>
-            <th>Heart Rate</th>
-            <th></th>
+            <th>Total Sleep (min)</th>
+            <th>Actual Sleep (min)</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
-    @foreach (var entry in Model)
-    {
-        <tr>
-            <td>@entry.Date</td>
-            <td>@entry.ActualSleepTime?.ToString(@"hh\:mm")</td>
-            <td>@entry.PercentREM?.ToString("0.0")%</td>
-            <td>@entry.AvgHeartRate</td>
-            <td>
-                <a asp-action="Details" asp-route-id="@entry.Id">Details</a> |
-                <a asp-action="Edit" asp-route-id="@entry.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@entry.Id">Delete</a>
-            </td>
-        </tr>
-    }
+        @foreach (var entry in Model) {
+            <tr>
+                <td>@entry.Date?.ToString("yyyy-MM-dd")</td>
+                <td>@entry.TotalTimeInBedMinutes</td>
+                <td>@entry.ActualSleepMinutes</td>
+                <td>
+                    <div class="btn-group">
+                        <a asp-action="Details" asp-route-id="@entry.Id" class="btn btn-secondary btn-sm">🔍</a>
+                        <a asp-action="Edit" asp-route-id="@entry.Id" class="btn btn-warning btn-sm">✏️</a>
+                        <a asp-action="Delete" asp-route-id="@entry.Id" class="btn btn-danger btn-sm">🗑️</a>
+                        <a asp-action="ExportSingle" asp-route-id="@entry.Id" target="_blank" class="btn btn-info btn-sm">📤</a>
+                    </div>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

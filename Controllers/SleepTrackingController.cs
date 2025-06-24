@@ -1,4 +1,7 @@
-﻿using HESDashboard.Services.Interfaces;
+﻿using HESDashboard.DTOs;
+using HESDashboard.Models;
+using HESDashboard.Services.Exports;
+using HESDashboard.Services.Interfaces;
 using HESDashboard.Utilities;
 using HESDashboard.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -7,11 +10,18 @@ using System.Reflection.Metadata.Ecma335;
 namespace HESDashboard.Controllers;
 public class SleepTrackingController : Controller {
     private readonly ISleepTrackingService _service;
-    public SleepTrackingController(ISleepTrackingService service) => _service = service;
+    private readonly IExportService<SleepTrackingEntry, SleepTrackingExportDTO> _export;
+    public SleepTrackingController(
+        ISleepTrackingService service,
+        IExportService<SleepTrackingEntry, SleepTrackingExportDTO> export) {
+        _service = service;
+        _export = export;
+    }
 
     public async Task<IActionResult> Index() {
         var entries = await _service.GetAllAsync();
-        return View(entries);
+        var viewModels = entries.Select(e => e.ToDisplayViewModel()).ToList();
+        return View(viewModels);
     }
 
     public async Task<IActionResult> Details(int id) {
@@ -56,5 +66,20 @@ public class SleepTrackingController : Controller {
     public async Task<IActionResult> DeleteConfirmed(int id) {
         await _service.DeleteAsync(id);
         return RedirectToAction(nameof(Index));
+    }
+
+    public async Task<IActionResult> ExportSingle(int id) {
+        var json = await _export.ExportSingleAsync(id);
+        return Content(json, "application/json");
+    }
+
+    public async Task<IActionResult> ExportRange(DateOnly from, DateOnly to) {
+        var json = await _export.ExportRangeAsync(from, to);
+        return Content(json, "application/json");
+    }
+
+    public async Task<IActionResult> ExportAll() {
+        var json = await _export.ExportAllAsync();
+        return Content(json, "application/json");
     }
 }
